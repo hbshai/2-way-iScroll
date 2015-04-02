@@ -119,12 +119,24 @@ TWIS.prototype = {
 	
 	handleEvent: function (e) {
 		var that = this;
+		
+		// ignore events while transitioning between pages
+		if (that.animating && that.dirX === 0 && that.dirY === 0) {
+			//alert("ignored event")
+			return
+		}
+
 		switch(e.type) {
 			case START_EV:
-				if (!hasTouch && e.button !== 0) return;
+				if (!hasTouch && e.button !== 0) {
+					return;
+				}
 				that._start(e);
 				break;
-			case MOVE_EV: that._move(e); break;
+			case MOVE_EV:
+				if (e.movementY && that.absDistX > that.absDistY)
+					return;
+				that._move(e); break;
 			case END_EV:
 			case CANCEL_EV: that._end(e); break;
 			case RESIZE_EV: that._resize(); break;
@@ -256,6 +268,7 @@ TWIS.prototype = {
 
 		that.moved = true;
 		that._pos(newX, newY);
+
 		that.dirX = deltaX > 0 ? -1 : deltaX < 0 ? 1 : 0;
 		that.dirY = deltaY > 0 ? -1 : deltaY < 0 ? 1 : 0;
 
@@ -265,12 +278,11 @@ TWIS.prototype = {
 			that.startY = that.y;
 		}
 		
+
 		if (that.options.onScrollMove) that.options.onScrollMove.call(that, e);
 	},
 	
-	_end: function (e) {
-		if (hasTouch && e.touches.length != 0) return;
-
+	_end: function (e) {		if (hasTouch && e.touches.length != 0) return;
 		var that = this,
 			point = hasTouch ? e.changedTouches[0] : e,
 			target, ev,
@@ -284,9 +296,7 @@ TWIS.prototype = {
 		that._unbind(MOVE_EV);
 		that._unbind(END_EV);
 		that._unbind(CANCEL_EV);
-
 		if (that.options.onBeforeScrollEnd) that.options.onBeforeScrollEnd.call(that, e);
-
 		if (!that.moved) {
 			if (hasTouch) {
 				// Find the last touched element
@@ -305,7 +315,6 @@ TWIS.prototype = {
 			}
 
 			that._resetPos(200);
-
 			if (that.options.onTouchEnd) that.options.onTouchEnd.call(that, e);
 			return;
 		}
@@ -356,9 +365,12 @@ TWIS.prototype = {
 			resetY = that.y >= 0 || that.maxScrollY > 0 ? 0 : that.y < that.maxScrollY ? that.maxScrollY : that.y;
 
 		if (resetX == that.x && resetY == that.y) {
+
 			if (that.moved) {
 				if (that.options.onScrollEnd) that.options.onScrollEnd.call(that);		// Execute custom code on scroll end
 				that.moved = false;
+						console.log('moved', false)
+
 			}
 
 			return;
