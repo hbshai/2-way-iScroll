@@ -1,6 +1,14 @@
-2-Way iScroll v2.0 beta
-=======================
+2-way iscroll
+=============
 
-2-Way iScroll lets you swipe through a virtually infinite number of vertically scrollable pages.
+Tweaked version of [2-way-iscroll](https://github.com/cubiq/2-way-iScroll).
 
-The script is based on [iScroll lite](http://cubiq.org/iscroll-4). It uses only one iScroll instance for both horizontal swiping and vertical scrolling. The number of pages is limited to the device memory, the script itself has a very small footprint.
+ - Added 100% width/height setup
+ - Fixed animation halting if user scrolls while changing pages (cannot scroll during page change)
+ - Fixed y-scrolling reset error (page wasn't properly reset if user scrolled some X then some Y)
+
+Probably introduced some bugs.
+
+'''TODO:'''
+
+ - Tweak animation fix; currently a little too long, forces user to sometimes re-swipe
