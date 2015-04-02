@@ -10,3 +10,4 @@ Tweaked version of [2-way-iscroll](https://github.com/cubiq/2-way-iScroll).
 Probably introduced some bugs. Planned updates:
 
  - Tweak animation fix; currently a little too long, forces user to sometimes re-swipe
+ - Tweak y-scroll fix; somehow needs to update x movement, looks fugly while doing y-swipes
