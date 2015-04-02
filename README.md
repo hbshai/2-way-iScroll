@@ -7,8 +7,6 @@ Tweaked version of [2-way-iscroll](https://github.com/cubiq/2-way-iScroll).
  - Fixed animation halting if user scrolls while changing pages (cannot scroll during page change)
  - Fixed y-scrolling reset error (page wasn't properly reset if user scrolled some X then some Y)
 
-Probably introduced some bugs.
-
-'''TODO:'''
+Probably introduced some bugs. Planned updates:
 
  - Tweak animation fix; currently a little too long, forces user to sometimes re-swipe
